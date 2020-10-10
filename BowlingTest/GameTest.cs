@@ -18,5 +18,13 @@ namespace BowlingTest
             game.Roll(3);
             Assert.AreEqual(3, game.Score);
         }
+
+        [Test]
+        public void RollFirstFrame()
+        {
+            game.Roll(3);
+            game.Roll(4);
+            Assert.AreEqual(7, game.Score);
+        }
     }
 }
