@@ -23,7 +23,10 @@ namespace Bowling
 
         public override string ToString()
         {
-            if(IsSpare())
+            if (IsStrike())
+                return $"[X][ ][{Score}]";
+
+            if (IsSpare())
                 return $"[{FirstBall}][/][{Score}]";
 
             return $"[{FirstBall}][{SecondBall}][{Score}]";

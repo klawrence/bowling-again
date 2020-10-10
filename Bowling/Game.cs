@@ -18,17 +18,28 @@ namespace Bowling
             Score += pins;
             Round round = CurrentRound();
 
+            Round previousRound = PreviousRound();
+            if (previousRound != null && previousRound.IsStrike())
+            {
+                Score += pins;
+                previousRound.Score += pins;
+            }
+
             if (firstBall)
             {
                 round.FirstBall = pins;
-                firstBall = false;
+                round.Score += pins;
 
-                Round previousRound = PreviousRound();
                 if (previousRound != null && previousRound.IsSpare())
                 {
                     Score += pins;
                     previousRound.Score += pins;
                 }
+
+                if (round.IsStrike())
+                    roundIndex++;
+                else
+                    firstBall = false;
             }
             else {
                 round.SecondBall = pins;

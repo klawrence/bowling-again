@@ -68,5 +68,19 @@ namespace BowlingTest
             Assert.AreEqual("[3][/][14]", round.ToString());
         }
 
+
+        [Test]
+        public void StrikeGetsTwoBonusBalls()
+        {
+            game.Roll(10);
+            game.Roll(3);
+            game.Roll(4);
+            Assert.AreEqual(24, game.Score);
+
+            Round round = game.Round(0);
+
+            Assert.AreEqual("[X][ ][17]", round.ToString());
+        }
+
     }
 }
