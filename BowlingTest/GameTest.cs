@@ -5,11 +5,12 @@ namespace BowlingTest
 {
     public class GameTest
     {
-        Game game = new Game();
+        Game game;
 
         [SetUp]
         public void Setup()
         {
+            game = new Game();
         }
 
         [Test]
