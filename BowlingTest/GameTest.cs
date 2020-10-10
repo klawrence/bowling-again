@@ -96,5 +96,23 @@ namespace BowlingTest
             Assert.AreEqual("[X][ ][30]", round.ToString());
         }
 
+        [Test]
+        public void RollAllStrikes()
+        {
+            for (int i = 0; i < 10; i++) {
+                game.Roll(10);
+            }
+            Assert.AreEqual(270, game.Score);
+
+            game.Roll(10);
+            Assert.AreEqual(290, game.Score);
+
+            game.Roll(10);
+            Assert.AreEqual(300, game.Score);
+
+            Round round = game.Round(0);
+            Assert.AreEqual("[X][X][30]", round.ToString());
+        }
+
     }
 }
