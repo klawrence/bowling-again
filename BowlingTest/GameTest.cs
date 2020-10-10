@@ -39,5 +39,24 @@ namespace BowlingTest
             Assert.AreEqual(4, round[1]);
             Assert.AreEqual(7, round[2]);
         }
+
+
+        [Test]
+        public void ShowScoreForLastFrame()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                game.Roll(3);
+                game.Roll(4);
+            }
+
+
+            int[] round = game.Round(9);
+
+            Assert.AreEqual(3, round[0]);
+            Assert.AreEqual(4, round[1]);
+            Assert.AreEqual(70, round[2]);
+
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace Bowling
         public void Roll(int pins)
         {
             Score += pins;
+
             if (firstBall)
             {
                 int[] round = rounds[roundIndex] = new int[3];
@@ -25,7 +26,9 @@ namespace Bowling
             else {
                 int[] round = rounds[roundIndex];
                 round[1] = pins;
-                round[2] = round[0] + round[1];
+                round[2] = Score;
+                firstBall = true;
+                roundIndex++;
             }
         }
 
@@ -36,7 +39,14 @@ namespace Bowling
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Game game = new Game();
+            for (int i = 0; i < 10; i++) {
+                game.Roll(3);
+                game.Roll(4);
+                int[] round = game.Round(i);
+                //Console.WriteLine(round.Length);
+                Console.WriteLine($"[{round[0]}][{round[1]}][{round[2]}]");
+            }
         }
     }
 }
