@@ -23,6 +23,9 @@ namespace Bowling
 
         public override string ToString()
         {
+            if(IsSpare())
+                return $"[{FirstBall}][/][{Score}]";
+
             return $"[{FirstBall}][{SecondBall}][{Score}]";
         }
     }

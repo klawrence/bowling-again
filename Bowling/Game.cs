@@ -6,8 +6,8 @@ namespace Bowling
     {
         public int Score { get; private set; } = 0;
         Round[] rounds = new Round[10];
-        bool firstBall = true;
         int roundIndex = 0;
+        bool firstBall = true;
 
         public Game()
         {
@@ -16,20 +16,40 @@ namespace Bowling
         public void Roll(int pins)
         {
             Score += pins;
+            Round round = CurrentRound();
 
             if (firstBall)
             {
-                Round round = rounds[roundIndex] = new Round();
                 round.FirstBall = pins;
                 firstBall = false;
+
+                Round previousRound = PreviousRound();
+                if (previousRound != null && previousRound.IsSpare())
+                {
+                    Score += pins;
+                    previousRound.Score += pins;
+                }
             }
             else {
-                Round round = rounds[roundIndex];
                 round.SecondBall = pins;
                 round.Score = Score;
                 firstBall = true;
                 roundIndex++;
             }
+        }
+
+        public Round CurrentRound()
+        {
+            if (rounds[roundIndex] == null)
+                rounds[roundIndex] = new Round();
+            return rounds[roundIndex];
+        }
+
+        public Round PreviousRound()
+        {
+            if (roundIndex == 0)
+                return null;
+            return rounds[roundIndex-1];
         }
 
         public Round Round(int round)

@@ -53,5 +53,20 @@ namespace BowlingTest
             Round round = game.Round(9);
             Assert.AreEqual("[3][4][70]", round.ToString());
         }
+
+        [Test]
+        public void SpareGetsABonusBall()
+        {
+            game.Roll(3);
+            game.Roll(7);
+            game.Roll(4);
+            game.Roll(4);
+            Assert.AreEqual(22, game.Score);
+
+            Round round = game.Round(0);
+
+            Assert.AreEqual("[3][/][14]", round.ToString());
+        }
+
     }
 }
