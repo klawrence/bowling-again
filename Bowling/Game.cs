@@ -5,7 +5,7 @@ namespace Bowling
     public class Game
     {
         public int Score { get; private set; } = 0;
-        int[][] rounds = new int[10][];
+        Round[] rounds = new Round[10];
         bool firstBall = true;
         int roundIndex = 0;
 
@@ -19,20 +19,20 @@ namespace Bowling
 
             if (firstBall)
             {
-                int[] round = rounds[roundIndex] = new int[3];
-                round[0] = pins;
+                Round round = rounds[roundIndex] = new Round();
+                round.FirstBall = pins;
                 firstBall = false;
             }
             else {
-                int[] round = rounds[roundIndex];
-                round[1] = pins;
-                round[2] = Score;
+                Round round = rounds[roundIndex];
+                round.SecondBall = pins;
+                round.Score = Score;
                 firstBall = true;
                 roundIndex++;
             }
         }
 
-        public int[] Round(int round)
+        public Round Round(int round)
         {
             return rounds[round];
         }
@@ -43,9 +43,8 @@ namespace Bowling
             for (int i = 0; i < 10; i++) {
                 game.Roll(3);
                 game.Roll(4);
-                int[] round = game.Round(i);
-                //Console.WriteLine(round.Length);
-                Console.WriteLine($"[{round[0]}][{round[1]}][{round[2]}]");
+                Round round = game.Round(i);
+                Console.WriteLine(round.ToString());
             }
         }
     }

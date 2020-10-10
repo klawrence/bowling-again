@@ -33,11 +33,9 @@ namespace BowlingTest
             game.Roll(3);
             game.Roll(4);
 
-            int[] round = game.Round(0);
+            Round round = game.Round(0);
 
-            Assert.AreEqual(3, round[0]);
-            Assert.AreEqual(4, round[1]);
-            Assert.AreEqual(7, round[2]);
+            Assert.AreEqual("[3][4][7]", round.ToString());
         }
 
 
@@ -51,12 +49,8 @@ namespace BowlingTest
             }
 
 
-            int[] round = game.Round(9);
-
-            Assert.AreEqual(3, round[0]);
-            Assert.AreEqual(4, round[1]);
-            Assert.AreEqual(70, round[2]);
-
+            Round round = game.Round(9);
+            Assert.AreEqual("[3][4][70]", round.ToString());
         }
     }
 }
