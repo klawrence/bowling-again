@@ -23,6 +23,15 @@ namespace Bowling
             {
                 Score += pins;
                 previousRound.Score += pins;
+
+                if (roundIndex > 1) {
+                    Round roundBeforeThat = rounds[roundIndex - 2];
+                    if (roundBeforeThat.IsStrike())
+                    {
+                        Score += pins;
+                        roundBeforeThat.Score += pins;
+                    }
+                }
             }
 
             if (firstBall)
