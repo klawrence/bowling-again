@@ -33,13 +33,30 @@ namespace Bowling
                 IsComplete = IsStrike();
 
                 if (Previous != null && Previous.IsSpare())
+                {
+                    Score += pins;
                     Previous.Score += pins;
+                }
             }
             else
             {
                 SecondBall = pins;
                 IsComplete = true;
             }
+
+            if (Previous != null && Previous.IsStrike())
+            {
+                Score += pins;
+                Previous.Score += pins;
+
+                if (Previous.Previous != null && Previous.Previous.IsStrike())
+                {
+                    Score += pins;
+                    Previous.Previous.Score += pins;
+                }
+            }
+
+
         }
 
         public bool IsSpare()
