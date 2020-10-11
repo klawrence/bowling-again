@@ -8,13 +8,38 @@ namespace Bowling
         public int Score { get; set; }
         public Round Previous { get; private set; }
 
+        public bool IsFirstBall { get; private set; } = true;
+        public bool IsComplete { get; private set; } = false;
+
         public Round(Round previousRound)
         {
             Previous = previousRound;
+            Score = Previous.Score;
         }
 
         public Round()
         {
+        }
+
+        public void Roll(int pins)
+        {
+            Score += pins;
+
+            if (IsFirstBall)
+            {
+                FirstBall = pins;
+                IsFirstBall = false;
+
+                IsComplete = IsStrike();
+
+                if (Previous != null && Previous.IsSpare())
+                    Previous.Score += pins;
+            }
+            else
+            {
+                SecondBall = pins;
+                IsComplete = true;
+            }
         }
 
         public bool IsSpare()

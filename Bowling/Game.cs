@@ -15,7 +15,10 @@ namespace Bowling
 
         public void Roll(int pins)
         {
-            Round round = CurrentRound();            
+            Round round = CurrentRound();
+            round.Roll(pins);
+            Score += pins;
+
             if (round.Previous != null && round.Previous.IsStrike())
             {
                 Score += pins;
@@ -29,29 +32,15 @@ namespace Bowling
                 }
             }
 
-            Score += pins;
 
-            if (firstBall)
+            if (round.IsComplete)
             {
-                round.FirstBall = pins;
-                round.Score += pins;
+                roundIndex++;
 
-                if (round.IsStrike())
-                    roundIndex++;
-                else
-                    firstBall = false;
-
-                if (round.Previous != null && round.Previous.IsSpare())
-                {
-                    Score += pins;
-                    round.Previous.Score += pins;
-                }
             }
             else {
-                round.SecondBall = pins;
-                round.Score = Score;
-                firstBall = true;
-                roundIndex++;
+                if (round.Previous != null && round.Previous.IsSpare())
+                    Score += pins;
             }
         }
 
