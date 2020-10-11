@@ -6,6 +6,12 @@ namespace Bowling
         public int FirstBall { get; set; }
         public int SecondBall { get; set; }
         public int Score { get; set; }
+        public Round Previous { get; private set; }
+
+        public Round(Round previousRound)
+        {
+            Previous = previousRound;
+        }
 
         public Round()
         {

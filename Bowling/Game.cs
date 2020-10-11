@@ -15,11 +15,11 @@ namespace Bowling
 
         public void Roll(int pins)
         {
-            Round previousRound = PreviousRound();
-            if (previousRound != null && previousRound.IsStrike())
+            Round round = CurrentRound();            
+            if (round.Previous != null && round.Previous.IsStrike())
             {
                 Score += pins;
-                previousRound.Score += pins;
+                round.Previous.Score += pins;
 
                 if (roundIndex > 1 && roundIndex < 11) {
                     Round roundBeforeThat = rounds[roundIndex - 2];
@@ -31,15 +31,8 @@ namespace Bowling
                 }
             }
 
-            if (roundIndex > rounds.Length)
-            {
-                roundIndex++;
-                return;
-            }
-
             Score += pins;
 
-            Round round = CurrentRound();
             if (firstBall)
             {
                 round.FirstBall = pins;
@@ -50,10 +43,10 @@ namespace Bowling
                 else
                     firstBall = false;
 
-                if (previousRound != null && previousRound.IsSpare())
+                if (round.Previous != null && round.Previous.IsSpare())
                 {
                     Score += pins;
-                    previousRound.Score += pins;
+                    round.Previous.Score += pins;
                 }
             }
             else {
@@ -67,7 +60,7 @@ namespace Bowling
         public Round CurrentRound()
         {
             if (rounds[roundIndex] == null)
-                rounds[roundIndex] = new Round();
+                rounds[roundIndex] = new Round(PreviousRound());
             return rounds[roundIndex];
         }
 
