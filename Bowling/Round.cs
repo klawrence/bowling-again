@@ -60,7 +60,7 @@ namespace Bowling
 
         public bool IsSpare()
         {
-            return balls.Count == 2 && balls[0] + balls[1] == 10;
+            return balls.Count > 1 && balls[0] + balls[1] == 10;
         }
 
         public bool IsStrike()
@@ -77,8 +77,10 @@ namespace Bowling
             {
                 if (IsStrike())
                     scores[i] = "X";
-                else if (i == 1 && IsSpare())
+                else if (IsSpare() && i == 1)
                     scores[i] = "/";
+                else if (LastRound && balls[i] == 10)
+                    scores[i] = "X";
                 else
                     scores[i] = balls[i].ToString();
             }

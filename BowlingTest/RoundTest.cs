@@ -79,5 +79,17 @@ namespace BowlingTest
             Assert.AreEqual("[X][X][X] [30]", round.ToString());
         }
 
+        [Test]
+        public void ShowScorecardSpareInTheLastRound()
+        {
+            round.LastRound = true;
+            round.Roll(5);
+            Assert.AreEqual("[5][ ][ ] [5]", round.ToString());
+            round.Roll(5);
+            Assert.AreEqual("[5][/][ ] [10]", round.ToString());
+            round.Roll(10);
+            Assert.AreEqual("[5][/][X] [20]", round.ToString());
+        }
+
     }
 }
