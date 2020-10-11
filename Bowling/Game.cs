@@ -21,13 +21,11 @@ namespace Bowling
                 Score += pins;
                 round.Previous.Score += pins;
 
-                if (roundIndex > 1 && roundIndex < 11) {
-                    Round roundBeforeThat = rounds[roundIndex - 2];
-                    if (roundBeforeThat.IsStrike())
-                    {
-                        Score += pins;
-                        roundBeforeThat.Score += pins;
-                    }
+                Round roundBeforeThat = round.Previous.Previous;
+                if (roundBeforeThat != null && roundBeforeThat.IsStrike())
+                {
+                    Score += pins;
+                    roundBeforeThat.Score += pins;
                 }
             }
 
