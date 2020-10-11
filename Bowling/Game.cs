@@ -57,16 +57,18 @@ namespace Bowling
 
         public Round CurrentRound()
         {
-            if (rounds[roundIndex] == null)
-                rounds[roundIndex] = new Round(PreviousRound());
-            return rounds[roundIndex];
-        }
+            Round round = rounds[roundIndex];
+            if (round == null)
+            {
+                if (roundIndex == 0)
+                    round = new Round();
+                else
+                    round = new Round(rounds[roundIndex-1]);
 
-        public Round PreviousRound()
-        {
-            if (roundIndex == 0 || roundIndex > rounds.Length)
-                return null;
-            return rounds[roundIndex-1];
+                rounds[roundIndex] = round;
+            }
+
+            return rounds[roundIndex];
         }
 
         public Round Round(int round)
