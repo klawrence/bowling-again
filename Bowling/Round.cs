@@ -1,14 +1,13 @@
-﻿using System;
+﻿using System.Collections.Generic;
+
 namespace Bowling
 {
     public class Round
     {
-        public int FirstBall { get; set; }
-        public int SecondBall { get; set; }
         public int Score { get; set; }
         public Round Previous { get; private set; }
 
-        public bool IsFirstBall { get; private set; } = true;
+        private List<int> balls = new List<int>();
         public bool IsComplete { get; private set; }
         public bool LastRound { get; set; }
         private int bonusBalls;
@@ -26,14 +25,13 @@ namespace Bowling
         public void Roll(int pins)
         {
             Score += pins;
+            balls.Add(pins);
 
             if (IsComplete)
                 bonusBalls++;
 
-            if (IsFirstBall)
+            if (balls.Count == 1)
             {
-                FirstBall = pins;
-                IsFirstBall = false;
                 IsComplete = IsStrike();
 
                 if (Previous != null && Previous.IsSpare())
@@ -44,7 +42,6 @@ namespace Bowling
             }
             else
             {
-                SecondBall = pins;
                 IsComplete = true;
             }
 
@@ -63,27 +60,30 @@ namespace Bowling
 
         public bool IsSpare()
         {
-            return ! IsStrike() && FirstBall + SecondBall == 10;
+            return balls.Count == 2 && balls[0] + balls[1] == 10;
         }
 
         public bool IsStrike()
         {
-            return FirstBall == 10;
+            return balls[0] == 10;
         }
 
         public override string ToString()
         {
-            if (LastRound) {
-                return $"[{"X"}][{"X"}][{"X"}] [{Score}]";
+            string total = balls.Count > 0 ? Score.ToString() : " ";
+            string[] scores = new string[] {" ", " "};
+
+            for (int i = 0; i < balls.Count; i++)
+            {
+                if (IsStrike())
+                    scores[i] = "X";
+                else if (i == 1 && IsSpare())
+                    scores[i] = "/";
+                else
+                    scores[i] = balls[i].ToString();
             }
 
-            if (IsStrike())
-                return $"[X][ ] [{Score}]";
-
-            if (IsSpare())
-                return $"[{FirstBall}][/] [{Score}]";
-
-            return $"[{FirstBall}][{SecondBall}] [{Score}]";
+            return $"[{scores[0]}][{scores[1]}] [{total}]";
         }
     }
 }
