@@ -17,7 +17,7 @@ namespace Bowling
             Round round = CurrentRound();
             round.Roll(pins);
 
-            if (round.IsComplete)
+            if (round.IsComplete && roundIndex < 9) // Don't advance past the last round
                 roundIndex++;
             
             Score = round.Score;
@@ -32,6 +32,9 @@ namespace Bowling
                     round = new Round();
                 else
                     round = new Round(rounds[roundIndex-1]);
+
+                if (roundIndex == 9)
+                    round.LastRound = true;
 
                 rounds[roundIndex] = round;
             }

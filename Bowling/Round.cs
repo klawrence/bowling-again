@@ -9,7 +9,9 @@ namespace Bowling
         public Round Previous { get; private set; }
 
         public bool IsFirstBall { get; private set; } = true;
-        public bool IsComplete { get; private set; } = false;
+        public bool IsComplete { get; private set; }
+        public bool LastRound { get; set; }
+        private int bonusBalls;
 
         public Round(Round previousRound)
         {
@@ -25,11 +27,13 @@ namespace Bowling
         {
             Score += pins;
 
+            if (IsComplete)
+                bonusBalls++;
+
             if (IsFirstBall)
             {
                 FirstBall = pins;
                 IsFirstBall = false;
-
                 IsComplete = IsStrike();
 
                 if (Previous != null && Previous.IsSpare())
@@ -44,19 +48,17 @@ namespace Bowling
                 IsComplete = true;
             }
 
-            if (Previous != null && Previous.IsStrike())
+            if (bonusBalls < 2 && Previous != null && Previous.IsStrike())
             {
                 Score += pins;
                 Previous.Score += pins;
 
-                if (Previous.Previous != null && Previous.Previous.IsStrike())
+                if (bonusBalls == 0 && Previous.Previous != null && Previous.Previous.IsStrike())
                 {
                     Score += pins;
                     Previous.Previous.Score += pins;
                 }
             }
-
-
         }
 
         public bool IsSpare()
@@ -71,13 +73,17 @@ namespace Bowling
 
         public override string ToString()
         {
+            if (LastRound) {
+                return $"[{"X"}][{"X"}][{"X"}] [{Score}]";
+            }
+
             if (IsStrike())
-                return $"[X][ ][{Score}]";
+                return $"[X][ ] [{Score}]";
 
             if (IsSpare())
-                return $"[{FirstBall}][/][{Score}]";
+                return $"[{FirstBall}][/] [{Score}]";
 
-            return $"[{FirstBall}][{SecondBall}][{Score}]";
+            return $"[{FirstBall}][{SecondBall}] [{Score}]";
         }
     }
 }

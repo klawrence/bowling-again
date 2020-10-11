@@ -35,8 +35,7 @@ namespace BowlingTest
             game.Roll(4);
 
             Round round = game.Round(0);
-
-            Assert.AreEqual("[3][4][7]", round.ToString());
+            Assert.AreEqual("[3][4] [7]", round.ToString());
         }
 
 
@@ -49,9 +48,8 @@ namespace BowlingTest
                 game.Roll(4);
             }
 
-
             Round round = game.Round(9);
-            Assert.AreEqual("[3][4][70]", round.ToString());
+            Assert.AreEqual("[3][4][ ] [70]", round.ToString());
         }
 
         [Test]
@@ -64,8 +62,7 @@ namespace BowlingTest
             Assert.AreEqual(22, game.Score);
 
             Round round = game.Round(0);
-
-            Assert.AreEqual("[3][/][14]", round.ToString());
+            Assert.AreEqual("[3][/] [14]", round.ToString());
         }
 
 
@@ -78,8 +75,7 @@ namespace BowlingTest
             Assert.AreEqual(24, game.Score);
 
             Round round = game.Round(0);
-
-            Assert.AreEqual("[X][ ][17]", round.ToString());
+            Assert.AreEqual("[X][ ] [17]", round.ToString());
         }
 
 
@@ -93,7 +89,7 @@ namespace BowlingTest
             Assert.AreEqual(60, game.Score);
 
             Round round = game.Round(0);
-            Assert.AreEqual("[X][ ][30]", round.ToString());
+            Assert.AreEqual("[X][ ] [30]", round.ToString());
         }
 
         [Test]
@@ -110,9 +106,8 @@ namespace BowlingTest
             game.Roll(10);
             Assert.AreEqual(300, game.Score);
 
-            Round round = game.Round(0);
-            Assert.AreEqual("[X][X][30]", round.ToString());
+            Round round = game.Round(9);
+            Assert.AreEqual("[X][X][X] [300]", round.ToString());
         }
-
     }
 }
