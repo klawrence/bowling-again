@@ -40,7 +40,7 @@ namespace BowlingTest
         }
 
         [Test]
-        public void ShowScoreCard()
+        public void ShowScorecard()
         {
             Assert.AreEqual("[ ][ ] [ ]", round.ToString());
 
@@ -53,11 +53,30 @@ namespace BowlingTest
 
 
         [Test]
-        public void ShowScoreCardForSpare()
+        public void ShowScorecardForSpare()
         {
             round.Roll(3);
             round.Roll(7);
             Assert.AreEqual("[3][/] [10]", round.ToString());
+        }
+
+        [Test]
+        public void ShowScorecardForStrike()
+        {
+            round.Roll(10);
+            Assert.AreEqual("[X][ ] [10]", round.ToString());
+        }
+
+        [Test]
+        public void ShowScorecardThreeStrikes()
+        {
+            round.LastRound = true;
+            round.Roll(10);
+            Assert.AreEqual("[X][ ][ ] [10]", round.ToString());
+            round.Roll(10);
+            Assert.AreEqual("[X][X][ ] [20]", round.ToString());
+            round.Roll(10);
+            Assert.AreEqual("[X][X][X] [30]", round.ToString());
         }
 
     }

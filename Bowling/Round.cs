@@ -71,7 +71,7 @@ namespace Bowling
         public override string ToString()
         {
             string total = balls.Count > 0 ? Score.ToString() : " ";
-            string[] scores = new string[] {" ", " "};
+            string[] scores = {" ", " ", " "};
 
             for (int i = 0; i < balls.Count; i++)
             {
@@ -83,6 +83,8 @@ namespace Bowling
                     scores[i] = balls[i].ToString();
             }
 
+            if(LastRound)
+                return $"[{scores[0]}][{scores[1]}][{scores[2]}] [{total}]";
             return $"[{scores[0]}][{scores[1]}] [{total}]";
         }
     }
